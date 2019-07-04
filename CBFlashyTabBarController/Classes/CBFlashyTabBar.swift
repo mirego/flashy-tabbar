@@ -30,13 +30,18 @@ open class CBFlashyTabBar: UITabBar {
             }
 
             select(itemAt: index, animated: false)
-
         }
     }
 
     open override var tintColor: UIColor! {
         didSet {
             buttons.forEach { $0.tintColor = tintColor }
+        }
+    }
+
+    open var selectedTintColor: UIColor! {
+        didSet {
+            buttons.forEach { $0.selectedTintColor = selectedTintColor }
         }
     }
 
@@ -50,10 +55,10 @@ open class CBFlashyTabBar: UITabBar {
         super.setItems(items, animated: animated)
         reloadViews()
     }
-    
-    
+
+
     var barHeight: CGFloat = 60
-    
+
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)
         sizeThatFits.height = barHeight
@@ -95,6 +100,7 @@ open class CBFlashyTabBar: UITabBar {
     private func button(forItem item: UITabBarItem) -> CBTabBarButton {
         let button = CBTabBarButton(item: item)
         button.tintColor = tintColor
+        button.selectedTintColor = selectedTintColor
         button.addTarget(self, action: #selector(btnPressed), for: .touchUpInside)
         if selectedItem != nil && item === selectedItem {
             button.select(animated: false)
@@ -105,9 +111,9 @@ open class CBFlashyTabBar: UITabBar {
 
     @objc private func btnPressed(sender: CBTabBarButton) {
         guard let index = buttons.index(of: sender),
-              index != NSNotFound,
-              let item = items?[index] else {
-            return
+            index != NSNotFound,
+            let item = items?[index] else {
+                return
         }
         buttons.forEach { (button) in
             guard button != sender else {

@@ -60,16 +60,18 @@ class CBTabBarButton: UIControl {
 
     override var tintColor: UIColor! {
         didSet {
-            tabImage.tintColor = tintColor.withAlphaComponent(0.4)
+            tabImage.tintColor = tintColor
             tabLabel.textColor = tintColor
             dotView.backgroundColor = tintColor
         }
     }
 
+    var selectedTintColor: UIColor!
+
     private func attributedText(fortitle title: String?) -> NSAttributedString {
         var attrs: [NSAttributedString.Key: Any] = [:]
         attrs[.kern] = -0.2
-        attrs[.foregroundColor] = tintColor
+        attrs[.foregroundColor] = selectedTintColor
         attrs[.font] = UIFont.systemFont(ofSize: 12, weight: .semibold)
         return NSAttributedString(string: title ?? "", attributes: attrs)
     }
@@ -108,6 +110,14 @@ class CBTabBarButton: UIControl {
         } else {
             deselect(animated: animated)
         }
+
+        setupView(isSelected: selected)
+    }
+
+    private func setupView(isSelected: Bool) {
+        tabImage.tintColor = isSelected ? selectedTintColor : tintColor
+        tabLabel.textColor = isSelected ? selectedTintColor : tintColor
+        dotView.backgroundColor = isSelected ? selectedTintColor : tintColor
     }
 
     func select(animated: Bool = true) {
@@ -136,10 +146,10 @@ class CBTabBarButton: UIControl {
         }
         _isSelected = false
         guard animated, let deselectAnimation = deselectAnimation else {
-                tabLabel.isHidden = true
-                tabImage.isHidden = false
-                dotView.isHidden = true
-                return
+            tabLabel.isHidden = true
+            tabImage.isHidden = false
+            dotView.isHidden = true
+            return
         }
         tabImage.isHidden = false
         deselectAnimation.playAnimation(forTabBarItem: self) {[weak self] in
@@ -149,5 +159,4 @@ class CBTabBarButton: UIControl {
             }
         }
     }
-
 }
