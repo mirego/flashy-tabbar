@@ -58,6 +58,12 @@ class CBTabBarButton: UIControl {
         }
     }
 
+    var attrs: [NSAttributedString.Key: Any] = [:] {
+        didSet {
+            tabLabel.attributedText = attributedText(fortitle: item?.title)
+        }
+    }
+
     override var tintColor: UIColor! {
         didSet {
             tabImage.tintColor = tintColor
@@ -69,10 +75,6 @@ class CBTabBarButton: UIControl {
     var selectedTintColor: UIColor!
 
     private func attributedText(fortitle title: String?) -> NSAttributedString {
-        var attrs: [NSAttributedString.Key: Any] = [:]
-        attrs[.kern] = -0.2
-        attrs[.foregroundColor] = selectedTintColor
-        attrs[.font] = UIFont.systemFont(ofSize: 12, weight: .semibold)
         return NSAttributedString(string: title ?? "", attributes: attrs)
     }
 
