@@ -29,7 +29,7 @@ open class CBFlashyTabBar: UITabBar {
                     return
             }
 
-            select(itemAt: index, animated: false)
+            select(itemAt: index, animated: true)
         }
     }
 
@@ -145,9 +145,8 @@ open class CBFlashyTabBar: UITabBar {
             guard button != selectedbutton else {
                 return
             }
-            button.setSelected(false, animated: false)
+            button.setSelected(false, animated: animated)
         }
-        selectedbutton.setSelected(true, animated: false)
+        selectedbutton.setSelected(true, animated: animated)
     }
-
 }

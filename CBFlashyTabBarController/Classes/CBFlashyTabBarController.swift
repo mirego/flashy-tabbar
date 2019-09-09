@@ -22,7 +22,7 @@ open class CBFlashyTabBarController: UITabBarController {
             guard let tabBar = tabBar as? CBFlashyTabBar, let index = viewControllers?.index(of: newValue) else {
                 return
             }
-            tabBar.select(itemAt: index, animated: false)
+            tabBar.select(itemAt: index, animated: true)
         }
     }
 
@@ -35,7 +35,7 @@ open class CBFlashyTabBarController: UITabBarController {
             guard let tabBar = tabBar as? CBFlashyTabBar else {
                 return
             }
-            tabBar.select(itemAt: selectedIndex, animated: false)
+            tabBar.select(itemAt: selectedIndex, animated: true)
         }
     }
 
